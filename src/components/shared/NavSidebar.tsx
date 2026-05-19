@@ -2,15 +2,18 @@
 
 import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
-import { House, Package, ClipboardText, Truck, SignOut, UserCircle } from "@phosphor-icons/react"
+import { House, Package, ClipboardText, Truck, SignOut, UserCircle, Newspaper, Files } from "@phosphor-icons/react"
 import type { UserProfile } from "@/types/portal"
 import { cn } from "@/lib/utils"
+import ThemeToggle from "@/components/shared/ThemeToggle"
 
 const NAV_ITEMS = [
   { label: "Dashboard", href: "/dashboard", icon: House },
-  { label: "Stock", href: "/stock", icon: Package },
   { label: "Orders", href: "/orders", icon: ClipboardText },
+  { label: "Stock", href: "/stock", icon: Package },
   { label: "Transport", href: "/orders/new?type=transport", icon: Truck },
+  { label: "News & Updates", href: "/news", icon: Newspaper },
+  { label: "Reports", href: "/reports", icon: Files },
   { label: "My Profile", href: "/profile", icon: UserCircle },
 ]
 
@@ -52,11 +55,12 @@ export default function NavSidebar({ profile }: { profile: UserProfile }) {
         })}
       </nav>
 
-      <div className="px-4 py-4 border-t border-slate-700">
+      <div className="px-4 py-4 border-t border-slate-700 space-y-1">
         <div className="mb-3 px-1">
           <p className="text-sm font-medium text-white truncate">{profile.name}</p>
           <p className="text-xs text-slate-400 truncate">{profile.companyName}</p>
         </div>
+        <ThemeToggle />
         <button
           onClick={handleLogout}
           className="flex items-center gap-2 w-full px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800 rounded-md transition-colors"

@@ -1,8 +1,11 @@
+import type { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { getSessionId } from "@/lib/session"
 import { getStockProducts } from "@/lib/odoo/stock"
 import PageHeader from "@/components/shared/PageHeader"
 import StockTable from "@/components/stock/StockTable"
+
+export const metadata: Metadata = { title: "Stock" }
 
 export default async function StockPage() {
   const sessionId = await getSessionId()

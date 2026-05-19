@@ -99,6 +99,7 @@ export interface CreateGoodsOrderPayload {
 }
 
 export interface CreateTransportOrderPayload {
+  type: "transport"
   costCentre: string
   collectDate: string
   deliverDate: string
@@ -118,4 +119,15 @@ export interface ApiResponse<T = unknown> {
   success: boolean
   data?: T
   error?: string
+}
+
+export interface BlogPost {
+  id: number
+  title: string
+  subtitle: string | null
+  excerpt: string | null
+  publishedAt: string
+  externalUrl: string
+  authorName: string | null
+  blogName: string
 }

@@ -12,7 +12,7 @@ export default async function PortalLayout({ children }: { children: React.React
   return (
     <div className="flex h-screen overflow-hidden">
       <NavSidebar profile={profile} />
-      <main className="flex-1 overflow-y-auto bg-slate-50">
+      <main className="flex-1 overflow-y-auto bg-background">
         <div className="p-8">
           {children}
         </div>

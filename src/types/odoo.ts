@@ -84,3 +84,15 @@ export interface OdooJsonRpcResponse<T = unknown> {
   result?: T
   error?: OdooJsonRpcError
 }
+
+export interface OdooBlogPost {
+  id: number
+  name: string
+  subtitle: string | false
+  teaser: string | false
+  post_date: string
+  website_published: boolean
+  website_url: string
+  author_id: [number, string] | false
+  blog_id: [number, string]
+}

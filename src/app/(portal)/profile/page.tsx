@@ -1,7 +1,10 @@
+import type { Metadata } from "next"
 import { redirect } from "next/navigation"
 import { getServerProfile } from "@/lib/session"
 import PageHeader from "@/components/shared/PageHeader"
 import ChangePasswordForm from "@/components/profile/ChangePasswordForm"
+
+export const metadata: Metadata = { title: "Profile" }
 
 export default async function ProfilePage() {
   const profile = await getServerProfile()
