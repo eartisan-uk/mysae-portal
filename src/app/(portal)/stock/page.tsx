@@ -15,7 +15,7 @@ export default async function StockPage() {
   let error: string | null = null
 
   try {
-    products = await getStockProducts(sessionId)
+    products = await getStockProducts()
   } catch (err) {
     console.error("[stock/page]", err)
     error = "Could not load stock data. Please try again."

@@ -3,19 +3,21 @@ import type { NextRequest } from "next/server"
 import { getSessionId, getServerProfile } from "@/lib/session"
 import { getOrders, createOrder } from "@/lib/odoo/orders"
 import { OdooError } from "@/lib/odoo/client"
-import type { OrderView, CreateOrderPayload } from "@/types/portal"
+import type { CreateOrderPayload } from "@/types/portal"
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   const sessionId = await getSessionId()
   if (!sessionId) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 })
   }
 
   const profile = await getServerProfile()
-  const view = (request.nextUrl.searchParams.get("view") ?? "my") as OrderView
+  if (!profile) {
+    return NextResponse.json({ error: "No profile found" }, { status: 401 })
+  }
 
   try {
-    const orders = await getOrders(sessionId, view, profile?.uid)
+    const orders = await getOrders(profile.parentPartnerId)
     return NextResponse.json({ orders })
   } catch (err) {
     if (err instanceof OdooError) {

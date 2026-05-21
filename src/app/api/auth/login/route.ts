@@ -22,10 +22,11 @@ export async function POST(request: Request) {
       login: string
       company_id: [number, string]
       partner_id: [number, string]
+      parent_id: [number, string] | false
     }>(
       "res.users",
       [["id", "=", auth.uid]],
-      ["id", "name", "login", "company_id", "partner_id"],
+      ["id", "name", "login", "company_id", "partner_id", "parent_id"],
       auth.sessionId
     )
 
@@ -35,14 +36,19 @@ export async function POST(request: Request) {
 
     const user = users[0]
 
+    const partnerId = Array.isArray(user.partner_id) ? user.partner_id[0] : user.partner_id
+    // parent_id is the Related Company partner. Fall back to own partnerId if user IS the company.
+    const parentPartnerId = Array.isArray(user.parent_id) ? user.parent_id[0] : partnerId
+
     // Build safe profile object for the browser
     const profile: UserProfile = {
       uid: auth.uid,
       name: user.name,
       email: user.login,
       companyId: Array.isArray(user.company_id) ? user.company_id[0] : user.company_id,
-      companyName: Array.isArray(user.company_id) ? user.company_id[1] : "",
-      partnerId: Array.isArray(user.partner_id) ? user.partner_id[0] : user.partner_id,
+      companyName: Array.isArray(user.parent_id) ? user.parent_id[1] : user.name,
+      partnerId,
+      parentPartnerId,
       warehouseId: null, // TODO: confirm warehouse field name with Odoo developer (Section 11.1)
     }
 

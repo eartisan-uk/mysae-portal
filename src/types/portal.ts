@@ -8,6 +8,7 @@ export interface UserProfile {
   companyId: number
   companyName: string
   partnerId: number
+  parentPartnerId: number
   warehouseId: number | null
 }
 
@@ -18,7 +19,6 @@ export interface StockProduct {
   imageUrl: string | null
   category: string
   onHand: number
-  available: number
 }
 
 export type OrderType = "goods-out" | "goods-in" | "transport"

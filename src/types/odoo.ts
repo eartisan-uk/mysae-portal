@@ -15,6 +15,7 @@ export interface OdooUser {
   login: string
   company_id: [number, string]
   partner_id: [number, string]
+  parent_id: [number, string] | false
 }
 
 export interface OdooPartner {
@@ -36,7 +37,6 @@ export interface OdooProductTemplate {
   image_1920: string | false
   categ_id: [number, string]
   qty_available: number
-  virtual_available: number
 }
 
 export interface OdooStockQuant {

@@ -11,7 +11,7 @@ export async function GET() {
   }
 
   try {
-    const products = await getStockProducts(sessionId)
+    const products = await getStockProducts()
     return NextResponse.json({ products })
   } catch (err) {
     if (err instanceof OdooError) {

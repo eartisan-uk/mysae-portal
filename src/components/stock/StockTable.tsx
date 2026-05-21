@@ -6,25 +6,9 @@ import {
   Table, TableBody, TableCell, TableHead,
   TableHeader, TableRow,
 } from "@/components/ui/table"
-import { cn } from "@/lib/utils"
+
 import type { StockProduct } from "@/types/portal"
 
-function AvailableBadge({ value }: { value: number }) {
-  return (
-    <span
-      className={cn(
-        "inline-block px-2 py-0.5 rounded text-xs font-medium",
-        value > 0
-          ? "bg-green-100 text-green-800"
-          : value === 0
-            ? "bg-slate-100 text-slate-600"
-            : "bg-red-100 text-red-700"
-      )}
-    >
-      {value}
-    </span>
-  )
-}
 
 interface StockTableProps {
   products: StockProduct[]
@@ -63,13 +47,12 @@ export default function StockTable({ products }: StockTableProps) {
             <TableHead>Product</TableHead>
             <TableHead>Category</TableHead>
             <TableHead className="text-right">On Hand</TableHead>
-            <TableHead className="text-right">Available</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {filtered.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={5} className="text-center text-slate-400 py-10">
+              <TableCell colSpan={4} className="text-center text-slate-400 py-10">
                 {search ? "No products match your search." : "No stock data."}
               </TableCell>
             </TableRow>
@@ -88,11 +71,6 @@ export default function StockTable({ products }: StockTableProps) {
                 </TableCell>
                 <TableCell className="text-slate-500">{product.category}</TableCell>
                 <TableCell className="text-right text-slate-700">{product.onHand}</TableCell>
-                <TableCell className="text-right">
-                  <div className="flex justify-end">
-                    <AvailableBadge value={product.available} />
-                  </div>
-                </TableCell>
               </TableRow>
             ))
           )}

@@ -19,7 +19,7 @@ export async function GET(_req: NextRequest, ctx: RouteContext<"/api/stock/[id]"
   }
 
   try {
-    const product = await getStockProduct(productId, sessionId)
+    const product = await getStockProduct(productId)
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 })
     }
