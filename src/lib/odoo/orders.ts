@@ -137,7 +137,7 @@ function shapeOrder(raw: OdooOrderRaw, lines: OdooOrderLine[]): Order {
 // Scoped to the user's company via partner_id domain.
 // ---------------------------------------------------------------------------
 
-function companyDomain(parentPartnerId: number): unknown[][] {
+function companyDomain(parentPartnerId: number): unknown[] {
   return ["|", ["partner_id", "=", parentPartnerId], ["partner_id.parent_id", "=", parentPartnerId]]
 }
 
