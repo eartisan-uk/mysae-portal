@@ -150,9 +150,11 @@ async function refreshServiceAccountSession(): Promise<{ sessionId: string; uid:
 // Model read/write helpers
 // ---------------------------------------------------------------------------
 
+export type OdooDomain = Array<string | unknown[]>
+
 export async function odooSearchRead<T>(
   model: string,
-  domain: unknown[][],
+  domain: OdooDomain,
   fields: string[],
   sessionId: string,
   options?: { limit?: number; offset?: number; order?: string }
