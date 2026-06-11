@@ -15,18 +15,17 @@ export async function POST(request: Request) {
     // Authenticate against Odoo
     const auth = await odooAuthenticate(email, password)
 
-    // Fetch full user record to get warehouse ID
+    // Fetch full user record
     const users = await odooSearchRead<{
       id: number
       name: string
       login: string
       company_id: [number, string]
       partner_id: [number, string]
-      parent_id: [number, string] | false
     }>(
       "res.users",
       [["id", "=", auth.uid]],
-      ["id", "name", "login", "company_id", "partner_id", "parent_id"],
+      ["id", "name", "login", "company_id", "partner_id"],
       auth.sessionId
     )
 
@@ -35,10 +34,24 @@ export async function POST(request: Request) {
     }
 
     const user = users[0]
-
     const partnerId = Array.isArray(user.partner_id) ? user.partner_id[0] : user.partner_id
-    // parent_id is the Related Company partner. Fall back to own partnerId if user IS the company.
-    const parentPartnerId = Array.isArray(user.parent_id) ? user.parent_id[0] : partnerId
+
+    // Fetch partner to get parent company (parent_id lives on res.partner, not res.users)
+    const partners = await odooSearchRead<{
+      id: number
+      name: string
+      parent_id: [number, string] | false
+    }>(
+      "res.partner",
+      [["id", "=", partnerId]],
+      ["id", "name", "parent_id"],
+      auth.sessionId
+    )
+
+    const partner = partners[0]
+    // parent_id is the company this contact belongs to. Fall back to own partner if user IS the company.
+    const parentPartnerId = partner && Array.isArray(partner.parent_id) ? partner.parent_id[0] : partnerId
+    const companyName = partner && Array.isArray(partner.parent_id) ? partner.parent_id[1] : user.name
 
     // Build safe profile object for the browser
     const profile: UserProfile = {
@@ -46,7 +59,7 @@ export async function POST(request: Request) {
       name: user.name,
       email: user.login,
       companyId: Array.isArray(user.company_id) ? user.company_id[0] : user.company_id,
-      companyName: Array.isArray(user.parent_id) ? user.parent_id[1] : user.name,
+      companyName,
       partnerId,
       parentPartnerId,
       warehouseId: null, // TODO: confirm warehouse field name with Odoo developer (Section 11.1)

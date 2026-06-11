@@ -27,8 +27,8 @@ export default function NavSidebar({ profile }: { profile: UserProfile }) {
   }
 
   return (
-    <aside className="flex flex-col w-60 shrink-0 h-screen bg-slate-900 text-slate-100">
-      <div className="px-6 py-5 border-b border-slate-700">
+    <aside className="flex flex-col w-60 shrink-0 h-screen bg-sidebar text-sidebar-foreground border-r border-sidebar-border">
+      <div className="px-6 py-5 border-b border-sidebar-border">
         <span className="text-lg font-semibold tracking-tight">MySAE</span>
       </div>
 
@@ -44,8 +44,8 @@ export default function NavSidebar({ profile }: { profile: UserProfile }) {
               className={cn(
                 "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
                 active
-                  ? "bg-slate-700 text-white"
-                  : "text-slate-400 hover:bg-slate-800 hover:text-white"
+                  ? "bg-sidebar-accent text-sidebar-accent-foreground"
+                  : "text-sidebar-foreground/60 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
               )}
             >
               <Icon size={18} />
@@ -55,15 +55,15 @@ export default function NavSidebar({ profile }: { profile: UserProfile }) {
         })}
       </nav>
 
-      <div className="px-4 py-4 border-t border-slate-700 space-y-1">
+      <div className="px-4 py-4 border-t border-sidebar-border space-y-1">
         <div className="mb-3 px-1">
-          <p className="text-sm font-medium text-white truncate">{profile.name}</p>
-          <p className="text-xs text-slate-400 truncate">{profile.companyName}</p>
+          <p className="text-sm font-medium text-sidebar-foreground truncate">{profile.name}</p>
+          <p className="text-xs text-sidebar-foreground/60 truncate">{profile.companyName}</p>
         </div>
         <ThemeToggle />
         <button
           onClick={handleLogout}
-          className="flex items-center gap-2 w-full px-3 py-2 text-sm text-slate-400 hover:text-white hover:bg-slate-800 rounded-md transition-colors"
+          className="flex items-center gap-2 w-full px-3 py-2 text-sm text-sidebar-foreground/60 hover:text-sidebar-accent-foreground hover:bg-sidebar-accent rounded-md transition-colors"
         >
           <SignOut size={16} />
           Sign out
