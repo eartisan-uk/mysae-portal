@@ -9,10 +9,10 @@ import {
 import type { OrderSummary, OrderStatus, OrderType } from "@/types/portal"
 
 const STATUS_STYLES: Record<OrderStatus, string> = {
-  draft:     "bg-slate-100 text-slate-600",
-  active:    "bg-blue-100 text-blue-700",
-  done:      "bg-green-100 text-green-800",
-  cancelled: "bg-red-100 text-red-700",
+  draft:     "bg-muted text-muted-foreground",
+  active:    "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
+  done:      "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
+  cancelled: "bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400",
 }
 const STATUS_LABELS: Record<OrderStatus, string> = {
   draft:     "Draft",
@@ -54,16 +54,16 @@ export default function OrdersTable({ orders }: OrdersTableProps) {
     : orders
 
   return (
-    <div className="bg-white rounded-lg border border-slate-200">
-      <div className="px-4 py-3 border-b border-slate-200 flex items-center justify-between gap-4">
+    <div className="bg-card rounded-lg border border-border">
+      <div className="px-4 py-3 border-b border-border flex items-center justify-between gap-4">
         <input
           type="search"
           placeholder="Search by reference or created by…"
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full max-w-sm text-sm px-3 py-1.5 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-400"
+          className="w-full max-w-sm text-sm px-3 py-1.5 border border-border rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         />
-        <span className="text-xs text-slate-400 shrink-0">
+        <span className="text-xs text-muted-foreground shrink-0">
           {filtered.length} / {orders.length}
         </span>
       </div>
@@ -83,20 +83,20 @@ export default function OrdersTable({ orders }: OrdersTableProps) {
         <TableBody>
           {filtered.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={7} className="text-center text-slate-400 py-10">
+              <TableCell colSpan={7} className="text-center text-muted-foreground py-10">
                 {search ? "No orders match your search." : "No orders found."}
               </TableCell>
             </TableRow>
           ) : (
             filtered.map(order => (
               <TableRow key={order.id}>
-                <TableCell className="font-mono text-sm text-slate-700">{order.reference}</TableCell>
-                <TableCell className="text-slate-600 text-sm">{TYPE_LABELS[order.type]}</TableCell>
+                <TableCell className="font-mono text-sm text-foreground">{order.reference}</TableCell>
+                <TableCell className="text-muted-foreground text-sm">{TYPE_LABELS[order.type]}</TableCell>
                 <TableCell><StatusBadge status={order.status} /></TableCell>
-                <TableCell className="text-slate-600 text-sm">{order.createdBy || "—"}</TableCell>
-                <TableCell className="text-slate-600 text-sm">{fmt(order.createdAt)}</TableCell>
-                <TableCell className="text-slate-600 text-sm">{fmt(order.collectDate)}</TableCell>
-                <TableCell className="text-slate-600 text-sm">{fmt(order.deliverDate)}</TableCell>
+                <TableCell className="text-muted-foreground text-sm">{order.createdBy || "—"}</TableCell>
+                <TableCell className="text-muted-foreground text-sm">{fmt(order.createdAt)}</TableCell>
+                <TableCell className="text-muted-foreground text-sm">{fmt(order.collectDate)}</TableCell>
+                <TableCell className="text-muted-foreground text-sm">{fmt(order.deliverDate)}</TableCell>
               </TableRow>
             ))
           )}

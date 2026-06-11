@@ -12,7 +12,7 @@ export default async function ReportsPage() {
   return (
     <>
       <PageHeader title="Reports" description="Analytics and reports" />
-      <div className="rounded-lg border border-slate-200 bg-white p-8 text-center text-sm text-slate-500">
+      <div className="rounded-lg border border-border bg-card p-8 text-center text-sm text-muted-foreground">
         Reports coming soon.
       </div>
     </>

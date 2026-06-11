@@ -26,16 +26,16 @@ export default function StockTable({ products }: StockTableProps) {
     : products
 
   return (
-    <div className="bg-white rounded-lg border border-slate-200">
-      <div className="px-4 py-3 border-b border-slate-200 flex items-center justify-between gap-4">
+    <div className="bg-card rounded-lg border border-border">
+      <div className="px-4 py-3 border-b border-border flex items-center justify-between gap-4">
         <input
           type="search"
           placeholder="Search by name, SKU, or category…"
           value={search}
           onChange={e => setSearch(e.target.value)}
-          className="w-full max-w-sm text-sm px-3 py-1.5 border border-slate-200 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-400"
+          className="w-full max-w-sm text-sm px-3 py-1.5 border border-border rounded-md bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring"
         />
-        <span className="text-xs text-slate-400 shrink-0">
+        <span className="text-xs text-muted-foreground shrink-0">
           {filtered.length} / {products.length}
         </span>
       </div>
@@ -52,7 +52,7 @@ export default function StockTable({ products }: StockTableProps) {
         <TableBody>
           {filtered.length === 0 ? (
             <TableRow>
-              <TableCell colSpan={4} className="text-center text-slate-400 py-10">
+              <TableCell colSpan={4} className="text-center text-muted-foreground py-10">
                 {search ? "No products match your search." : "No stock data."}
               </TableCell>
             </TableRow>
@@ -60,17 +60,17 @@ export default function StockTable({ products }: StockTableProps) {
             filtered.map(product => (
               <TableRow key={product.id} className="cursor-pointer">
                 <TableCell>
-                  <Link href={`/stock/${product.id}`} className="block inset-0 text-slate-500 font-mono">
+                  <Link href={`/stock/${product.id}`} className="block inset-0 text-muted-foreground font-mono">
                     {product.code ?? "—"}
                   </Link>
                 </TableCell>
                 <TableCell>
-                  <Link href={`/stock/${product.id}`} className="block font-medium text-slate-900 hover:text-slate-600">
+                  <Link href={`/stock/${product.id}`} className="block font-medium text-foreground hover:text-muted-foreground">
                     {product.name}
                   </Link>
                 </TableCell>
-                <TableCell className="text-slate-500">{product.category}</TableCell>
-                <TableCell className="text-right text-slate-700">{product.onHand}</TableCell>
+                <TableCell className="text-muted-foreground">{product.category}</TableCell>
+                <TableCell className="text-right text-foreground">{product.onHand}</TableCell>
               </TableRow>
             ))
           )}
