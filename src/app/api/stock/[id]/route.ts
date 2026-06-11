@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
-import { getSessionId } from "@/lib/session"
+import { getServerProfile } from "@/lib/session"
 import { getStockProduct, updateProductImage, updateProductDimensions } from "@/lib/odoo/stock"
 import { OdooError } from "@/lib/odoo/client"
 
 export async function GET(_req: NextRequest, ctx: RouteContext<"/api/stock/[id]">) {
-  const sessionId = await getSessionId()
+  const profile = await getServerProfile()
 
-  if (!sessionId) {
+  if (!profile) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 })
   }
 
@@ -19,7 +19,7 @@ export async function GET(_req: NextRequest, ctx: RouteContext<"/api/stock/[id]"
   }
 
   try {
-    const product = await getStockProduct(productId)
+    const product = await getStockProduct(productId, profile.parentPartnerId)
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 })
     }
@@ -34,9 +34,9 @@ export async function GET(_req: NextRequest, ctx: RouteContext<"/api/stock/[id]"
 }
 
 export async function PATCH(req: NextRequest, ctx: RouteContext<"/api/stock/[id]">) {
-  const sessionId = await getSessionId()
+  const profile = await getServerProfile()
 
-  if (!sessionId) {
+  if (!profile) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 })
   }
 

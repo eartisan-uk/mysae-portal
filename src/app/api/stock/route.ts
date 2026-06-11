@@ -1,17 +1,17 @@
 import { NextResponse } from "next/server"
-import { getSessionId } from "@/lib/session"
+import { getServerProfile } from "@/lib/session"
 import { getStockProducts } from "@/lib/odoo/stock"
 import { OdooError } from "@/lib/odoo/client"
 
 export async function GET() {
-  const sessionId = await getSessionId()
+  const profile = await getServerProfile()
 
-  if (!sessionId) {
+  if (!profile) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 })
   }
 
   try {
-    const products = await getStockProducts()
+    const products = await getStockProducts(profile.parentPartnerId)
     return NextResponse.json({ products })
   } catch (err) {
     if (err instanceof OdooError) {

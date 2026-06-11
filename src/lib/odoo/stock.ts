@@ -26,14 +26,19 @@ function shapeProduct(raw: OdooProductTemplate, imageBase64?: string | false): S
   }
 }
 
-// TODO: filter by user warehouseId once field name confirmed (Open Items §11.1)
 // Uses service account — portal users lack stock.move read access needed by
 // Odoo's qty_available compute method.
-export async function getStockProducts(): Promise<StockProduct[]> {
+// parentPartnerId scopes results to the company assigned via goods_owner_customer_id
+// on the product category (subcategories inherit the effective value).
+export async function getStockProducts(parentPartnerId: number): Promise<StockProduct[]> {
   return serviceAccountRead(async (sessionId) => {
     const raw = await odooSearchRead<OdooProductTemplate>(
       "product.template",
-      [["sale_ok", "=", true], ["active", "=", true]],
+      [
+        ["sale_ok", "=", true],
+        ["active", "=", true],
+        ["categ_id.goods_owner_customer_id", "=", parentPartnerId],
+      ],
       LIST_FIELDS,
       sessionId,
       { order: "name asc", limit: 500 }
@@ -42,11 +47,14 @@ export async function getStockProducts(): Promise<StockProduct[]> {
   })
 }
 
-export async function getStockProduct(id: number): Promise<StockProduct | null> {
+export async function getStockProduct(id: number, parentPartnerId: number): Promise<StockProduct | null> {
   return serviceAccountRead(async (sessionId) => {
     const raw = await odooSearchRead<OdooProductDetail>(
       "product.template",
-      [["id", "=", id]],
+      [
+        ["id", "=", id],
+        ["categ_id.goods_owner_customer_id", "=", parentPartnerId],
+      ],
       DETAIL_FIELDS,
       sessionId
     )
