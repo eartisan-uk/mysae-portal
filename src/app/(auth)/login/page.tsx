@@ -8,10 +8,14 @@ export default function LoginPage() {
     <main className="min-h-screen flex flex-col items-center justify-center bg-muted/40 px-4">
       <div className="flex flex-col items-center gap-8 w-full max-w-sm">
         <div className="flex flex-col items-center gap-2">
-          <div className="text-3xl font-bold tracking-tight">
-            <span className="text-green-500 italic">My</span>
-            <span className="text-[#1e2a5e]">SAE</span>
-          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 336.2 118.89" width={240} height={85} aria-label="MySAE">
+            <path fill="#27235c" d="M168.34,19.96s-6.99-5.81-15.7-9.22c-5.14-1.95-9.05-2.74-12.82-2.74-29.1,0-37.63,17.37-37.63,30.8,0,0-.88,10.51,7.79,18.54,8.67,8.03,21.31,10.36,21.31,10.36,0,0,17.49,3.07,19.26,10.66,1.77,7.59-4.27,13.68-11.17,14.89-14.99,2.63-30.72-11.68-30.72-11.68l-9.85,15.03s16.02,15.18,33.96,15.18,40.72-8.76,40.72-33.42c0-9.63-4.71-18.25-12.06-22.62,0,0-4.85-3.21-11.91-5.55-7.06-2.33-14.11-4.09-18.08-5.84-3.97-1.75-9.21-4.72-6.32-11.82,2.56-6.27,11.23-6.34,16.17-5.98,6.91.49,16.89,8.32,16.89,8.32l10.16-14.89Z"/>
+            <path fill="#27235c" d="M215.53,41.76l8.69,24.34h-18.11l9.42-24.34ZM207.8,12.39l-37.43,98.3h18.6l10.75-28.29,29.82.12,10.14,28.17h22.1L225.31,7.23l-17.51,5.15Z"/>
+            <polygon fill="#27235c" points="265.88 10.11 265.88 110.69 327.21 110.69 327.21 94.03 286.65 94.03 286.65 65.26 312.36 65.26 321.18 48.59 286.4 48.59 286.4 26.77 322.38 26.77 331.32 10.11 265.88 10.11"/>
+            <text fill="#71bf44" fontFamily="'Freestyle Script', 'Brush Script MT', cursive" fontSize={98} transform="translate(15.47 82.27)">
+              <tspan x="0" y="0">My</tspan>
+            </text>
+          </svg>
           <p className="text-sm text-muted-foreground">Client Portal</p>
         </div>
         <LoginForm />
